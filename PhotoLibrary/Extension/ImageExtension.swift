@@ -10,6 +10,9 @@ import Foundation
 
 extension UIImage {
     func resizeForList(count: CGFloat) -> UIImage? {
+        if ScreenConfig.get.boardSize == nil {
+            fatalError("Screen size not set on ScreenConfig. Set it by initialize")
+        }
         let size = CGSize(width: ScreenConfig.get.width, height: ScreenConfig.get.height/count)
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
@@ -32,6 +35,9 @@ extension UIImage {
     }
     
     func resizeForTile(column: CGFloat, row: CGFloat) -> UIImage {
+        if ScreenConfig.get.boardSize == nil {
+            fatalError("Screen size not set on ScreenConfig. Set it by initialize")
+        }
         let size = CGSize(width: ScreenConfig.get.width/column, height: ScreenConfig.get.height/row)
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
@@ -42,6 +48,9 @@ extension UIImage {
     }
     
     func resizeForFullScreen() -> UIImage {
+        if ScreenConfig.get.boardSize == nil {
+            fatalError("Screen size not set on ScreenConfig. Set it by initialize")
+        }
         UIGraphicsBeginImageContextWithOptions(ScreenConfig.get.boardSize, false, 0.0)
         draw(in: CGRect(origin: CGPoint.zero, size: size))
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -50,6 +59,9 @@ extension UIImage {
     }
     
     func compositeImage(source image: UIImage, width: CGFloat, height: CGFloat, x: CGFloat, y: CGFloat) -> UIImage {
+        if ScreenConfig.get.boardSize == nil {
+            fatalError("Screen size not set on ScreenConfig. Set it by initialize")
+        }
         UIGraphicsBeginImageContextWithOptions(ScreenConfig.get.boardSize, false, 0.0)
         image.draw(in: CGRect(x: x, y: y, width: width, height: height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()

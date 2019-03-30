@@ -17,17 +17,18 @@ Pod::Spec.new do |spec|
 
   spec.name         = "PhotoLibrary"
   spec.version      = "0.0.1"
-  spec.summary      = "A short description of PhotoLibrary."
+  spec.summary      = "Framework for selecting photos"
+  spec.swift_version = "4.2"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = <<-DESC
+  spec.description  = <<-DESC "Framework for selecting photos."
                    DESC
 
-  spec.homepage     = "http://EXAMPLE/PhotoLibrary"
+  spec.homepage     = "https://github.com/GalaxyDevGamer/PhotoLibrary"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -38,7 +39,7 @@ Pod::Spec.new do |spec|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  spec.license      = "MIT (example)"
+  spec.license      = "MIT"
   # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 
@@ -63,11 +64,10 @@ Pod::Spec.new do |spec|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  # spec.platform     = :ios
-  # spec.platform     = :ios, "5.0"
+  spec.platform     = :ios
 
   #  When using multiple platforms
-  # spec.ios.deployment_target = "5.0"
+  spec.ios.deployment_target = "10.0"
   # spec.osx.deployment_target = "10.7"
   # spec.watchos.deployment_target = "2.0"
   # spec.tvos.deployment_target = "9.0"
@@ -79,7 +79,7 @@ Pod::Spec.new do |spec|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "http://EXAMPLE/PhotoLibrary.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/GalaxyDevGamer/PhotoLibrary.git", :tag => "#{spec.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -90,7 +90,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}"
+  spec.source_files  = "PhotoLibrary/**/*.{swift}"
   spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -116,7 +116,7 @@ Pod::Spec.new do |spec|
   #  the lib prefix of their name.
   #
 
-  # spec.framework  = "SomeFramework"
+  spec.framework  = "UIKit"
   # spec.frameworks = "SomeFramework", "AnotherFramework"
 
   # spec.library   = "iconv"
@@ -129,7 +129,7 @@ Pod::Spec.new do |spec|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-  # spec.requires_arc = true
+  spec.requires_arc = true
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
