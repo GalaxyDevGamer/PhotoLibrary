@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "PhotoLibrary"
-  spec.version      = "1.0.1"
+  spec.version      = "1.0.2"
   spec.summary      = "Framework for selecting photos"
   spec.swift_version = "4.2"
 
