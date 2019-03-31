@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class PhotoLibraryView: UIViewController {
+public class PhotoLibraryView: UIViewController {
 
     var collectionView: UICollectionView!
     
@@ -27,7 +27,7 @@ class PhotoLibraryView: UIViewController {
     
     let indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close24pt"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(closeClick))
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(doneClick))
@@ -68,7 +68,7 @@ class PhotoLibraryView: UIViewController {
         view.addSubview(indicator)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         if library.isAuthorized() {
             photos = library.getAllPhotos()
         } else {
@@ -98,11 +98,11 @@ class PhotoLibraryView: UIViewController {
 }
 
 extension PhotoLibraryView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = albumTitle
         return cell
@@ -110,11 +110,11 @@ extension PhotoLibraryView: UITableViewDataSource {
 }
 
 extension PhotoLibraryView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let view = AlbumView()
         view.delegate = self
         navigationController?.pushViewController(view, animated: true)
@@ -122,11 +122,11 @@ extension PhotoLibraryView: UITableViewDelegate {
 }
 
 extension PhotoLibraryView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos == nil ? 0 : photos.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! LibraryCell
         cell.setData(image: photos.object(at: indexPath.row).getImagesForCollection())
         if selectedImages.contains(photos.object(at: indexPath.row)) {
@@ -137,7 +137,7 @@ extension PhotoLibraryView: UICollectionViewDataSource {
 }
 
 extension PhotoLibraryView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! LibraryCell
         if cell.isChecked {
             selectedImages.remove(at: selectedImages.firstIndex(of: photos.object(at: indexPath.row))!)
@@ -148,12 +148,12 @@ extension PhotoLibraryView: UICollectionViewDelegateFlowLayout {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize(width: self.view.frame.size.width/3-7, height: self.view.frame.size.width/3-7)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }

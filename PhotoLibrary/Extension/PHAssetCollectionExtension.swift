@@ -9,7 +9,7 @@
 import Foundation
 import Photos
 
-extension PHAssetCollection {
+public extension PHAssetCollection {
     func getPhotos() -> PHFetchResult<PHAsset> {
         return PHAsset.fetchAssets(in: self, options: PHOptionProvider.get.fetchByCreattionDate())
     }

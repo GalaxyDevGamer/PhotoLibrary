@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LibraryCell: UICollectionViewCell {
+public class LibraryCell: UICollectionViewCell {
 
     @IBOutlet weak var thumbnail: UIImageView!
     
@@ -16,13 +16,13 @@ class LibraryCell: UICollectionViewCell {
     
     var isChecked = false
     
-    override func prepareForReuse() {
+    override public func prepareForReuse() {
         super.prepareForReuse()
         self.isSelected = false
         setDeselected()
     }
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         layer.borderWidth = 3.0

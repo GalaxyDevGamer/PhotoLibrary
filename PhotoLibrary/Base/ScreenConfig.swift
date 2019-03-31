@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScreenConfig: NSObject {
+public class ScreenConfig: NSObject {
 
     static let get = ScreenConfig()
     

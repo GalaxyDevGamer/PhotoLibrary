@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class AlbumView: UIViewController {
+public class AlbumView: UIViewController {
 
     var tableView: UITableView!
     
@@ -19,7 +19,7 @@ class AlbumView: UIViewController {
     
     var albums = [PHAssetCollection]()
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
@@ -38,11 +38,11 @@ class AlbumView: UIViewController {
 }
 
 extension AlbumView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return albums.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = albums[indexPath.row].localizedTitle
         return cell
@@ -50,7 +50,7 @@ extension AlbumView: UITableViewDataSource {
 }
 
 extension AlbumView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         delegate.onAlbumSelected(album: albums[indexPath.row])
         navigationController?.popViewController(animated: true)

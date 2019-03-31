@@ -9,7 +9,7 @@
 import Foundation
 import Photos
 
-extension PHAsset {
+public extension PHAsset {
     func getImagesForCollection() -> UIImage {
         var thumbnail = UIImage(named: "Image48pt")
         PHImageManager.default().requestImage(for: self, targetSize: CGSize(width: 200, height: 200), contentMode: PHImageContentMode.aspectFill, options: PHOptionProvider.get.options) { (image, info) in

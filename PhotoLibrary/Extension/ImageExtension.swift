@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension UIImage {
+public extension UIImage {
     func resizeForList(count: CGFloat) -> UIImage? {
         if ScreenConfig.get.boardSize == nil {
             fatalError("Screen size not set on ScreenConfig. Set it by initialize")
