@@ -10,7 +10,12 @@ import UIKit
 
 public class LibraryCell: UICollectionViewCell {
 
-    @IBOutlet weak var thumbnail: UIImageView!
+    let imageView: UIImageView = {
+        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
     
     public var isChecked = false
     
@@ -20,15 +25,23 @@ public class LibraryCell: UICollectionViewCell {
         setDeselected()
     }
     
-    override public func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(imageView)
+        imageView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
+        imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0)
+        imageView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0)
+        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
         layer.borderWidth = 3.0
         layer.borderColor = UIColor.clear.cgColor
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     public func setData(image: UIImage) {
-        thumbnail.image = image
+        imageView.image = image
     }
     
     public func setSelected() {

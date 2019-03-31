@@ -43,7 +43,7 @@ public class PhotoLibraryView: UIViewController {
         collectionLayout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         collectionLayout.itemSize = CGSize(width: self.view.frame.size.width/3-7, height: self.view.frame.size.width/3-7)
         collectionView = UICollectionView(frame: CGRect(x: 0, y: 50, width: view.frame.width, height: view.frame.height-50), collectionViewLayout: collectionLayout)
-        collectionView.register(UINib(nibName: "LibraryCell", bundle: nil), forCellWithReuseIdentifier: "cell")
+        collectionView.register(LibraryCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         collectionView.dataSource = self

@@ -17,7 +17,6 @@
 		6B9A12B7224FC73C000F9CBC /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9A12B6224FC73C000F9CBC /* AlbumView.swift */; };
 		6B9A12B9224FC813000F9CBC /* SinglePhotoLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9A12B8224FC813000F9CBC /* SinglePhotoLibraryView.swift */; };
 		6B9A12BD224FC8E6000F9CBC /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9A12BB224FC8E6000F9CBC /* LibraryCell.swift */; };
-		6B9A12BE224FC8E6000F9CBC /* LibraryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B9A12BC224FC8E6000F9CBC /* LibraryCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +32,6 @@
 		6B9A12B6224FC73C000F9CBC /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 		6B9A12B8224FC813000F9CBC /* SinglePhotoLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhotoLibraryView.swift; sourceTree = "<group>"; };
 		6B9A12BB224FC8E6000F9CBC /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
-		6B9A12BC224FC8E6000F9CBC /* LibraryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LibraryCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +107,6 @@
 			isa = PBXGroup;
 			children = (
 				6B9A12BB224FC8E6000F9CBC /* LibraryCell.swift */,
-				6B9A12BC224FC8E6000F9CBC /* LibraryCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -183,7 +180,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B9A12BE224FC8E6000F9CBC /* LibraryCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
