@@ -49,11 +49,11 @@ public class PhotoLibrary: NSObject {
     }
 }
 
-protocol PhotoLibraryDelegate: NSObjectProtocol {
+public protocol PhotoLibraryDelegate: NSObjectProtocol {
     func photosLoaded(assets: PHFetchResult<PHAsset>)
 }
 
-class PHOptionProvider: NSObject {
+public class PHOptionProvider: NSObject {
     
     static let get = PHOptionProvider()
     

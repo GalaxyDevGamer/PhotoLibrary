@@ -57,6 +57,6 @@ extension AlbumView: UITableViewDelegate {
     }
 }
 
-protocol AlbumViewDelegate: NSObjectProtocol {
+public protocol AlbumViewDelegate: NSObjectProtocol {
     func onAlbumSelected(album: PHAssetCollection)
 }

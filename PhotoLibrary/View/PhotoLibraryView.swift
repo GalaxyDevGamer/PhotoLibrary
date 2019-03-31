@@ -159,7 +159,7 @@ extension PhotoLibraryView: UICollectionViewDelegateFlowLayout {
 }
 
 extension PhotoLibraryView: AlbumViewDelegate {
-    func onAlbumSelected(album: PHAssetCollection) {
+    public func onAlbumSelected(album: PHAssetCollection) {
         self.photos = album.getPhotos()
         self.albumTitle = album.localizedTitle!
         tableView.reloadData()
@@ -168,7 +168,7 @@ extension PhotoLibraryView: AlbumViewDelegate {
 }
 
 extension PhotoLibraryView: PhotoLibraryDelegate {
-    func photosLoaded(assets: PHFetchResult<PHAsset>) {
+    public func photosLoaded(assets: PHFetchResult<PHAsset>) {
         photos = assets
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -176,6 +176,6 @@ extension PhotoLibraryView: PhotoLibraryDelegate {
     }
 }
 
-protocol PhotoViewDelegate: NSObjectProtocol {
+public protocol PhotoViewDelegate: NSObjectProtocol {
     func photosSelected(images: [UIImage])
 }
