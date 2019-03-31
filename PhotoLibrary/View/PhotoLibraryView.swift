@@ -31,7 +31,6 @@ public class PhotoLibraryView: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close24pt"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(closeClick))
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(doneClick))
-        ScreenConfig.get.initialize(screenSize: view.frame.size)
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false

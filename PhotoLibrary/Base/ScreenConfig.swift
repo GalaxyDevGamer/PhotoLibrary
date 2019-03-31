@@ -9,21 +9,18 @@
 import UIKit
 
 public class ScreenConfig: NSObject {
-
-    static let get = ScreenConfig()
     
-    public var size: CGSize!
+    public static let get = ScreenConfig()
     
-    public var width: CGFloat!
+    var size: CGSize!
     
-    public var height: CGFloat!
+    var width: CGFloat!
     
-    public var boardSize: CGSize!
+    var height: CGFloat!
     
-    public func initialize(screenSize: CGSize) {
-        size = screenSize
-        width = size.width
-        height = size.height
-        boardSize = CGSize(width: width, height: height)
+    override init() {
+        size = UIScreen.main.bounds.size
+        width = UIScreen.main.bounds.width
+        height = UIScreen.main.bounds.height
     }
 }

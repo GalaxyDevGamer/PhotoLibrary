@@ -32,10 +32,10 @@ public extension PHAsset {
     
     func getImageForTheBoard() -> UIImage {
         var original = UIImage(named: "Image48pt")
-        if ScreenConfig.get.boardSize == nil {
+        if ScreenConfig.get.size == nil {
             fatalError("Screen size not set on ScreenConfig. Set it by initialize")
         }
-        PHImageManager.default().requestImage(for: self, targetSize: ScreenConfig.get.boardSize, contentMode: PHImageContentMode.aspectFill, options: PHOptionProvider.get.options) { (image, info) in
+        PHImageManager.default().requestImage(for: self, targetSize: ScreenConfig.get.size, contentMode: PHImageContentMode.aspectFill, options: PHOptionProvider.get.options) { (image, info) in
             if let thumbnail = image {
                 original = thumbnail
             }
