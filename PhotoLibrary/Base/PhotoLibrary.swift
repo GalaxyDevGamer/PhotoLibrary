@@ -10,10 +10,10 @@ import UIKit
 import Photos
 
 public class PhotoLibrary: NSObject {
-
-    var delegate: PhotoLibraryDelegate!
     
-    func isAuthorized() -> Bool {
+    public var delegate: PhotoLibraryDelegate!
+    
+    public func isAuthorized() -> Bool {
         switch PHPhotoLibrary.authorizationStatus() {
         case .authorized:
             return true
@@ -22,7 +22,7 @@ public class PhotoLibrary: NSObject {
         }
     }
     
-    func requestPermisson() {
+    public func requestPermisson() {
         return PHPhotoLibrary.requestAuthorization { (status) in
             switch status {
             case PHAuthorizationStatus.authorized:
@@ -33,11 +33,11 @@ public class PhotoLibrary: NSObject {
         }
     }
     
-    func getAllPhotos() -> PHFetchResult<PHAsset>{
+    public func getAllPhotos() -> PHFetchResult<PHAsset>{
         return PHAsset.fetchAssets(with: PHAssetMediaType.image, options: PHOptionProvider.get.fetchByCreattionDate())
     }
     
-    func getAlbums() -> [PHAssetCollection] {
+    public func getAlbums() -> [PHAssetCollection] {
         var albums = [PHAssetCollection]()
         PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.any, options: PHOptionProvider.get.fetchWithNil()).enumerateObjects { (collection, int, UnsafeMutablePointer) in
             albums.append(collection)
@@ -55,9 +55,9 @@ public protocol PhotoLibraryDelegate: NSObjectProtocol {
 
 public class PHOptionProvider: NSObject {
     
-    static let get = PHOptionProvider()
+    public static let get = PHOptionProvider()
     
-    let options = PHImageRequestOptions()
+    public let options = PHImageRequestOptions()
     
     override init() {
         super.init()
@@ -68,12 +68,12 @@ public class PHOptionProvider: NSObject {
 }
 
 extension PHOptionProvider {
-    func fetchWithNil() -> PHFetchOptions {
+    public func fetchWithNil() -> PHFetchOptions {
         let options = PHFetchOptions()
         return options
     }
     
-    func fetchByCreattionDate() -> PHFetchOptions {
+    public func fetchByCreattionDate() -> PHFetchOptions {
         let options = PHFetchOptions()
         options.sortDescriptors = [
             NSSortDescriptor(key: "creationDate", ascending: false)
@@ -81,7 +81,7 @@ extension PHOptionProvider {
         return options
     }
     
-    func fetchByLocalIdentifier() -> PHFetchOptions {
+    public func fetchByLocalIdentifier() -> PHFetchOptions {
         let options = PHFetchOptions()
         options.sortDescriptors = [
             NSSortDescriptor(key: "localIdentifier", ascending: false)

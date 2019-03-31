@@ -12,9 +12,7 @@ public class LibraryCell: UICollectionViewCell {
 
     @IBOutlet weak var thumbnail: UIImageView!
     
-    var indexInSelection = 0
-    
-    var isChecked = false
+    public var isChecked = false
     
     override public func prepareForReuse() {
         super.prepareForReuse()
@@ -29,16 +27,16 @@ public class LibraryCell: UICollectionViewCell {
         layer.borderColor = UIColor.clear.cgColor
     }
     
-    func setData(image: UIImage) {
+    public func setData(image: UIImage) {
         thumbnail.image = image
     }
     
-    func setSelected() {
+    public func setSelected() {
         isChecked = true
         layer.borderColor = UIColor.green.cgColor
     }
     
-    func setDeselected() {
+    public func setDeselected() {
         isChecked = false
         layer.borderColor = UIColor.clear.cgColor
     }

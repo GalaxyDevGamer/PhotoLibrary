@@ -13,7 +13,7 @@ public class AlbumView: UIViewController {
 
     var tableView: UITableView!
     
-    var delegate: AlbumViewDelegate!
+    weak open var delegate: AlbumViewDelegate!
     
     let library = PhotoLibrary()
     

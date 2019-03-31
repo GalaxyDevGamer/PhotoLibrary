@@ -23,7 +23,7 @@ public class PhotoLibraryView: UIViewController {
     
     var selectedImages = [PHAsset]()
     
-    var delegate: PhotoViewDelegate!
+    weak open var delegate: PhotoLibraryViewDelegate!
     
     let indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
     
@@ -176,6 +176,6 @@ extension PhotoLibraryView: PhotoLibraryDelegate {
     }
 }
 
-public protocol PhotoViewDelegate: NSObjectProtocol {
+public protocol PhotoLibraryViewDelegate: NSObjectProtocol {
     func photosSelected(images: [UIImage])
 }

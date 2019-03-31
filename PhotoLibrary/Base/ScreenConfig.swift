@@ -12,15 +12,15 @@ public class ScreenConfig: NSObject {
 
     static let get = ScreenConfig()
     
-    var size: CGSize!
+    public var size: CGSize!
     
-    var width: CGFloat!
+    public var width: CGFloat!
     
-    var height: CGFloat!
+    public var height: CGFloat!
     
-    var boardSize: CGSize!
+    public var boardSize: CGSize!
     
-    func initialize(screenSize: CGSize) {
+    public func initialize(screenSize: CGSize) {
         size = screenSize
         width = size.width
         height = size.height
