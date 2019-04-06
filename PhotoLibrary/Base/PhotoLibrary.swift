@@ -70,7 +70,7 @@ public class PhotoLibrary: NSObject {
         return photos[0].getImagesForCollection()
     }
     
-    func getInformationFromGivenCollection(collections: [PHAssetCollection]) -> [Album]{
+    public func getInformationFromGivenCollection(collections: [PHAssetCollection]) -> [Album]{
         var infomations = [Album]()
         collections.forEach { (collection) in
             let photos = collection.getPhotos()
