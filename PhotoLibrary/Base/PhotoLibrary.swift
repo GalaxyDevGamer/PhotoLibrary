@@ -47,6 +47,39 @@ public class PhotoLibrary: NSObject {
         }
         return albums
     }
+    
+    public func getAlbumWithExcludingEmptyAlbum() -> [PHAssetCollection] {
+        var albums = [PHAssetCollection]()
+        PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: PHAssetCollectionSubtype.any, options: PHOptionProvider.get.fetchWithNil()).enumerateObjects { (collection, int, UnsafeMutablePointer) in
+            if collection.estimatedAssetCount > 0 {
+                albums.append(collection)
+            }
+        }
+        PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.album, subtype: PHAssetCollectionSubtype.any, options: PHOptionProvider.get.fetchWithNil()).enumerateObjects { (collection, index, UnsafeMutablePointer) in
+            if collection.estimatedAssetCount > 0 {
+                albums.append(collection)
+            }
+        }
+        return albums
+    }
+    
+    public func getThumbnail(photos: PHFetchResult<PHAsset>) -> UIImage {
+        if photos.count == 0 {
+            return UIImage()
+        }
+        return photos[0].getImagesForCollection()
+    }
+    
+    func getInformationFromGivenCollection(collections: [PHAssetCollection]) -> [Album]{
+        var infomations = [Album]()
+        collections.forEach { (collection) in
+            let photos = collection.getPhotos()
+            if photos.count > 0 {
+                infomations.append(Album(photos: collection, thumbnail: getThumbnail(photos: photos), title: collection.localizedTitle!, count: photos.count))
+            }
+        }
+        return infomations
+    }
 }
 
 public protocol PhotoLibraryDelegate: NSObjectProtocol {

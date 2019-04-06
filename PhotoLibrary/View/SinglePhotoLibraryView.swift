@@ -10,54 +10,58 @@ import UIKit
 import Photos
 
 public class SinglePhotoLibraryView: UIViewController {
-
-    var tableView: UITableView!
     
-    var collectionView: UICollectionView!
+    let tableView = LibraryViewConfigs.get.albumTitleTableView
+    
+    let collectionView = LibraryViewConfigs.get.photoCollectionView
     
     let library = PhotoLibrary()
     
     var photos: PHFetchResult<PHAsset>!
     
-    var albumTitle = "All Photos"
+    var album: PHAssetCollection!
+    
+    var selectedAsset: PHAsset!
     
     weak open var delegate: SinglePhotoLibraryViewDelegate!
     
-    var selectedAsset: PHAsset!
+    let indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
+    
+    let albumView = AlbumView()
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Close24pt"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(closeClick))
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(doneClick))
-        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .white
+        view.addSubview(tableView)
+        view.addSubview(collectionView)
         tableView.dataSource = self
         tableView.delegate = self
-        view.addSubview(tableView)
-        let collectionLayout = UICollectionViewFlowLayout()
-        collectionLayout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-        collectionLayout.itemSize = CGSize(width: self.view.frame.size.width/3-7, height: self.view.frame.size.width/3-7)
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: 50, width: view.frame.width, height: view.frame.height-50), collectionViewLayout: collectionLayout)
-        collectionView!.register(LibraryCell.self, forCellWithReuseIdentifier: "cell")
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .white
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        view.addSubview(collectionView)
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        tableView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        tableView.heightAnchor.constraint(equalToConstant: 145).isActive = true
+        collectionView.delegate = self
+        collectionView.dataSource = self
         collectionView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0).isActive = true
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         library.delegate = self
+        albumView.delegate = self
+        indicator.color = .gray
+        indicator.center = view.center
+        view.addSubview(indicator)
+    }
+    
+    override public func viewWillAppear(_ animated: Bool) {
         if library.isAuthorized() {
-            photos = library.getAllPhotos()
+            if album != nil {
+                photos = album.getPhotos()
+            } else {
+                photos = library.getAllPhotos()
+            }
         } else {
             library.requestPermisson()
         }
@@ -80,21 +84,20 @@ extension SinglePhotoLibraryView: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = albumTitle
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AlbumTableCellByCode
+        cell.setData(thumbnail: photos.object(at: 0).getImagesForCollection(), title: album == nil ? "All Photos" : album.localizedTitle!, count: photos.count)
         return cell
     }
 }
 
 extension SinglePhotoLibraryView: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 100
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let view = AlbumView()
-        view.delegate = self
-        navigationController?.pushViewController(view, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
+        navigationController?.pushViewController(albumView, animated: true)
     }
 }
 
@@ -109,8 +112,8 @@ extension SinglePhotoLibraryView: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! LibraryCell
-        cell.setData(image: photos.object(at: indexPath.row).getImagesForCollection())
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
+        cell.set(image: photos.object(at: indexPath.row).getImagesForCollection())
         for index in collectionView.indexPathsForSelectedItems! {
             if index == indexPath {
                 cell.setSelected()
@@ -122,13 +125,13 @@ extension SinglePhotoLibraryView: UICollectionViewDataSource {
 
 extension SinglePhotoLibraryView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! LibraryCell
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotoCell
         cell.setSelected()
         selectedAsset = photos.object(at: indexPath.row)
     }
     
     public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! LibraryCell
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotoCell
         cell.setDeselected()
     }
     
@@ -144,10 +147,12 @@ extension SinglePhotoLibraryView: UICollectionViewDelegateFlowLayout {
 
 extension SinglePhotoLibraryView: AlbumViewDelegate {
     public func onAlbumSelected(album: PHAssetCollection) {
-        self.photos = album.getPhotos()
-        self.albumTitle = album.localizedTitle!
-        tableView.reloadData()
-        collectionView.reloadData()
+        self.album = album
+        photos = album.getPhotos()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.collectionView.reloadData()
+        }
     }
 }
 

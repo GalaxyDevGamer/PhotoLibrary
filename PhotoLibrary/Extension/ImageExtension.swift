@@ -68,4 +68,15 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return newImage!
     }
+    
+    func resizeToHalf() -> UIImage {
+        let size = CGSize(width: self.size.width*0.5, height: self.size.height*0.5)
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        draw(in: CGRect(origin: CGPoint.zero, size: size))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image!
+    }
 }
