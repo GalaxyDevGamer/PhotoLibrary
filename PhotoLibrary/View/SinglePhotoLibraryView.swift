@@ -85,7 +85,7 @@ extension SinglePhotoLibraryView: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AlbumTableCellByCode
-        cell.setData(thumbnail: photos.object(at: 0).getImagesForCollection(), title: album == nil ? "All Photos" : album.localizedTitle!, count: photos.count)
+        cell.set(thumbnail: photos.object(at: 0).getImagesForCollection(), title: album == nil ? "All Photos" : album.localizedTitle!, count: photos.count)
         return cell
     }
 }

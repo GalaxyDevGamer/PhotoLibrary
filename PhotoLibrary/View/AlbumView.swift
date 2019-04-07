@@ -69,7 +69,7 @@ extension AlbumView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AlbumTableCellByCode
         let album = thumbnails[indexPath.row]
-        cell.setData(thumbnail: album.thumbnail, title: album.title, count: album.count)
+        cell.set(thumbnail: album.thumbnail, title: album.title, count: album.count)
         return cell
     }
 }
@@ -98,7 +98,7 @@ extension AlbumView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AlbumCollectionCellByCode
         let album = thumbnails[indexPath.row]
-        cell.setData(thumbnail: album.thumbnail, title: album.title, count: album.count)
+        cell.set(thumbnail: album.thumbnail, title: album.title, count: album.count)
         return cell
     }
 }

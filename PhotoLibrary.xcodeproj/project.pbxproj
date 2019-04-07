@@ -66,7 +66,7 @@
 		6B2090A6223F34E700518A1C /* PhotoLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				6B9A12BA224FC897000F9CBC /* Cell */,
+				6BEE22CD2259B7DD00FE5DA0 /* Config */,
 				6B9A12B3224F5E91000F9CBC /* View */,
 				6B2090B6223F397000518A1C /* Extension */,
 				6B2090B3223F388200518A1C /* Base */,
@@ -80,8 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				6B2090B4223F38C300518A1C /* PhotoLibrary.swift */,
-				6B2090B9223F3A1200518A1C /* ScreenConfig.swift */,
-				6BEE22C72258FB8500FE5DA0 /* LibraryViewConfigs.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -106,12 +104,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		6B9A12BA224FC897000F9CBC /* Cell */ = {
+		6BEE22CD2259B7DD00FE5DA0 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				6BEE22C72258FB8500FE5DA0 /* LibraryViewConfigs.swift */,
 				6B9A12BB224FC8E6000F9CBC /* CellConfigs.swift */,
+				6B2090B9223F3A1200518A1C /* ScreenConfig.swift */,
 			);
-			path = Cell;
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

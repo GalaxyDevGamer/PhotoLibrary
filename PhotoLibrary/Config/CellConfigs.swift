@@ -12,8 +12,6 @@ public class PhotoCell: UICollectionViewCell {
 
     let imageView: UIImageView = {
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
         view.contentMode = ContentMode.scaleAspectFill
         view.layer.masksToBounds = true
         return view
@@ -57,7 +55,7 @@ public class PhotoCell: UICollectionViewCell {
     }
 }
 
-class AlbumTableCellByCode: UITableViewCell {
+public class AlbumTableCellByCode: UITableViewCell {
     
     let content: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 100))
@@ -119,14 +117,14 @@ class AlbumTableCellByCode: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setData(thumbnail: UIImage, title: String, count: Int) {
+    public func set(thumbnail: UIImage, title: String, count: Int) {
         thumbnailView.image = thumbnail
         titleLabel.text = title
         countLabel.text = String(count)
     }
 }
 
-class AlbumCollectionCellByCode: UICollectionViewCell {
+public class AlbumCollectionCellByCode: UICollectionViewCell {
     
     let rootView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: ScreenConfig.get.width/2-7, height: ScreenConfig.get.width/2-7))
@@ -155,7 +153,7 @@ class AlbumCollectionCellByCode: UICollectionViewCell {
         return view
     }()
     
-    func setData(thumbnail: UIImage, title: String, count: Int) {
+    public func set(thumbnail: UIImage, title: String, count: Int) {
         thumbnailView.image = thumbnail
         titleLabel.text = title
         countLabel.text = String(count)
