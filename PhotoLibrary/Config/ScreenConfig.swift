@@ -12,11 +12,11 @@ public class ScreenConfig: NSObject {
     
     public static let get = ScreenConfig()
     
-    var size: CGSize!
+    public var size: CGSize!
     
-    var width: CGFloat!
+    public var width: CGFloat!
     
-    var height: CGFloat!
+    public var height: CGFloat!
     
     override init() {
         size = UIScreen.main.bounds.size
