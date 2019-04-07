@@ -30,14 +30,14 @@ public class LibraryViewConfigs: NSObject {
         return view
     }()
     
-    public var albumTableView: UITableView = {
+    public let albumTableView: UITableView = {
         let view = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenConfig.get.width, height: ScreenConfig.get.height))
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    public var albumCollectionView: UICollectionView = {
+    public let albumCollectionView: UICollectionView = {
         let collectionLayout = UICollectionViewFlowLayout()
         collectionLayout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         collectionLayout.itemSize = CGSize(width: ScreenConfig.get.width/2-7, height: ScreenConfig.get.width/2-7)
