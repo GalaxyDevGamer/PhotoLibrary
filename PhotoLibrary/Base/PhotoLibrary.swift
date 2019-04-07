@@ -86,6 +86,13 @@ public protocol PhotoLibraryDelegate: NSObjectProtocol {
     func photosLoaded(assets: PHFetchResult<PHAsset>)
 }
 
+public struct Album {
+    public var photos: PHAssetCollection
+    public var thumbnail: UIImage
+    public var title: String
+    public var count: Int
+}
+
 public class PHOptionProvider: NSObject {
     
     public static let get = PHOptionProvider()

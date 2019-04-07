@@ -123,10 +123,3 @@ extension AlbumView: UICollectionViewDelegateFlowLayout {
 public protocol AlbumViewDelegate: NSObjectProtocol {
     func onAlbumSelected(album: PHAssetCollection)
 }
-
-public struct Album {
-    var photos: PHAssetCollection
-    var thumbnail: UIImage
-    var title: String
-    var count: Int
-}
