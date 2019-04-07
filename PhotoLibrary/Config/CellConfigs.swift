@@ -136,7 +136,6 @@ public class AlbumCollectionCellByCode: UICollectionViewCell {
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: ScreenConfig.get.width/2-7, height: ScreenConfig.get.width/2-7))
         view.contentMode = ContentMode.scaleAspectFill
         view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     

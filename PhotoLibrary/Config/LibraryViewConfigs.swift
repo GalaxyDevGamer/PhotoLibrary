@@ -42,7 +42,6 @@ public class LibraryViewConfigs: NSObject {
         collectionLayout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         collectionLayout.itemSize = CGSize(width: ScreenConfig.get.width/2-7, height: ScreenConfig.get.width/2-7)
         let view = UICollectionView(frame: CGRect(x: 0, y: 50, width: ScreenConfig.get.width, height: ScreenConfig.get.height-50), collectionViewLayout: collectionLayout)
-        view.register(AlbumCollectionCellByCode.self, forCellWithReuseIdentifier: "cell")
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
