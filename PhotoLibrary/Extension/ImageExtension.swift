@@ -79,4 +79,14 @@ public extension UIImage {
         
         return image!
     }
+    
+    func resizeByPercent(width: Double, height: Double) -> UIImage {
+        let size = CGSize(width: Double(self.size.width)*width, height: Double(self.size.height)*height)
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        draw(in: CGRect(origin: CGPoint.zero, size: size))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
 }
