@@ -28,10 +28,10 @@ public class PhotoCell: UICollectionViewCell {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
-        imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0)
-        imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0)
-        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
+        imageView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
         layer.borderWidth = 3.0
         layer.borderColor = UIColor.clear.cgColor
     }

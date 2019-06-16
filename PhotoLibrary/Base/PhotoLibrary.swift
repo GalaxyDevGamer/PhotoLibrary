@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Photos
 
 public class PhotoLibrary: NSObject {
@@ -22,6 +23,9 @@ public class PhotoLibrary: NSObject {
         }
     }
     
+    /*
+     Request the permisson to access photos and if it's granted, the PhotoLibraryDelegate will notify and brings the asset
+     */
     public func requestPermisson() {
         return PHPhotoLibrary.requestAuthorization { (status) in
             switch status {
@@ -70,12 +74,38 @@ public class PhotoLibrary: NSObject {
         return photos[0].getImagesForCollection()
     }
     
+    @available(iOS 13.0, *)
+    /*
+     SwiftUI version of getting thumbnail
+     */
+    public func getThumbnail(photos: PHFetchResult<PHAsset>) -> Image {
+        if photos.count == 0 {
+            return img
+        }
+        return photos[0].getImagesForCollection()
+    }
+    
     public func getInformationFromGivenCollection(collections: [PHAssetCollection]) -> [Album]{
         var infomations = [Album]()
         collections.forEach { (collection) in
             let photos = collection.getPhotos()
             if photos.count > 0 {
                 infomations.append(Album(photos: collection, thumbnail: getThumbnail(photos: photos), title: collection.localizedTitle!, count: photos.count))
+            }
+        }
+        return infomations
+    }
+    
+    @available(iOS 13.0, *)
+    /*
+     SwiftUI version of getting thumbnail from given collection
+     */
+    public func getInformationFromGivenCollection(collections: [PHAssetCollection]) -> [AlbumUI]{
+        var infomations = [AlbumUI]()
+        collections.forEach { (collection) in
+            let photos = collection.getPhotos()
+            if photos.count > 0 {
+                infomations.append(AlbumUI(photos: collection, thumbnail: getThumbnail(photos: photos), title: collection.localizedTitle!, count: photos.count))
             }
         }
         return infomations
@@ -89,6 +119,17 @@ public protocol PhotoLibraryDelegate: NSObjectProtocol {
 public struct Album {
     public var photos: PHAssetCollection
     public var thumbnail: UIImage
+    public var title: String
+    public var count: Int
+}
+
+@available(iOS 13.0, *)
+/*
+ SwiftUI version of Album Struct
+ */
+public struct AlbumUI {
+    public var photos: PHAssetCollection
+    public var thumbnail: Image
     public var title: String
     public var count: Int
 }
