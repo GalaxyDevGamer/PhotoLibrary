@@ -52,7 +52,7 @@ public extension UIImage {
             fatalError("Screen size not set on ScreenConfig. Set it by initialize")
         }
         UIGraphicsBeginImageContextWithOptions(ScreenConfig.get.size, false, 0.0)
-        draw(in: CGRect(origin: CGPoint.zero, size: size))
+        draw(in: CGRect(origin: CGPoint.zero, size: ScreenConfig.get.size))
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
@@ -142,7 +142,7 @@ public extension UIImage {
             fatalError("Screen size not set on ScreenConfig. Set it by initialize")
         }
         UIGraphicsBeginImageContextWithOptions(ScreenConfig.get.size, false, 0.0)
-        draw(in: CGRect(origin: CGPoint.zero, size: size))
+        draw(in: CGRect(origin: CGPoint.zero, size: ScreenConfig.get.size))
         guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return img }
         UIGraphicsEndImageContext()
         return Image(uiImage: image)
