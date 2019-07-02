@@ -1,15 +1,15 @@
 //
-//  SinglePhotoLibraryView.swift
+//  LibraryView.swift
 //  PhotoLibrary
 //
-//  Created by GINGA WATANABE on 2019/03/31.
+//  Created by GINGA WATANABE on 2019/03/18.
 //  Copyright © 2019 GalaxySoftware. All rights reserved.
 //
 
 import UIKit
 import Photos
 
-public class SinglePhotoLibraryView: UIViewController {
+public class LibraryView: UIViewController {
     
     let tableView = LibraryViewConfigs.get.albumTitleTableView
     
@@ -21,9 +21,9 @@ public class SinglePhotoLibraryView: UIViewController {
     
     var album: PHAssetCollection!
     
-    var selectedAsset: PHAsset!
+    public var selectedImages = [PHAsset]()
     
-    weak open var delegate: SinglePhotoLibraryViewDelegate!
+    weak open var delegate: PhotoLibraryViewDelegate!
     
     let indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
     
@@ -42,9 +42,9 @@ public class SinglePhotoLibraryView: UIViewController {
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         tableView.heightAnchor.constraint(equalToConstant: 145).isActive = true
-        collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0).isActive = true
+        collectionView.delegate = self
+        collectionView.topAnchor.constraint(equalToSystemSpacingBelow: tableView.bottomAnchor, multiplier: 0).isActive = true
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
@@ -67,9 +67,19 @@ public class SinglePhotoLibraryView: UIViewController {
         }
     }
     
+    func collectImages() -> [UIImage] {
+        indicator.startAnimating()
+        var images = [UIImage]()
+        self.selectedImages.forEach { (asset) in
+            images.append(asset.getOriginalImage())
+        }
+        indicator.stopAnimating()
+        return images
+    }
+    
     @objc func doneClick() {
         dismiss(animated: true) {
-            self.delegate.photoSelected(image: self.selectedAsset.getOriginalImage())
+            self.delegate.photosSelected(images: self.collectImages(), assets: self.selectedImages)
         }
     }
     
@@ -78,9 +88,9 @@ public class SinglePhotoLibraryView: UIViewController {
     }
 }
 
-extension SinglePhotoLibraryView: UITableViewDataSource {
+extension LibraryView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.photos == nil ? 0 : 1
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,7 +100,7 @@ extension SinglePhotoLibraryView: UITableViewDataSource {
     }
 }
 
-extension SinglePhotoLibraryView: UITableViewDelegate {
+extension LibraryView: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
@@ -101,38 +111,31 @@ extension SinglePhotoLibraryView: UITableViewDelegate {
     }
 }
 
-extension SinglePhotoLibraryView: UICollectionViewDataSource {
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    
+extension LibraryView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos == nil ? 0 : photos.count
+        return self.photos == nil ? 0 : self.photos.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
         cell.set(image: photos.object(at: indexPath.row).getImagesForCollection())
-        for index in collectionView.indexPathsForSelectedItems! {
-            if index == indexPath {
-                cell.setSelected()
-            }
+        if selectedImages.contains(photos.object(at: indexPath.row)) {
+            cell.setSelected()
         }
         return cell
     }
 }
 
-extension SinglePhotoLibraryView: UICollectionViewDelegateFlowLayout {
+extension LibraryView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! PhotoCell
-        cell.setSelected()
-        selectedAsset = photos.object(at: indexPath.row)
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! PhotoCell
-        cell.setDeselected()
+        if cell.isChecked {
+            selectedImages.remove(at: selectedImages.firstIndex(of: photos.object(at: indexPath.row))!)
+            cell.setDeselected()
+        } else {
+            selectedImages.append(photos.object(at: indexPath.row))
+            cell.setSelected()
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -145,7 +148,7 @@ extension SinglePhotoLibraryView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension SinglePhotoLibraryView: AlbumViewDelegate {
+extension LibraryView: AlbumViewDelegate {
     public func onAlbumSelected(album: PHAssetCollection) {
         self.album = album
         photos = album.getPhotos()
@@ -156,7 +159,7 @@ extension SinglePhotoLibraryView: AlbumViewDelegate {
     }
 }
 
-extension SinglePhotoLibraryView: PhotoLibraryDelegate {
+extension LibraryView: PhotoLibraryDelegate {
     public func photosLoaded(assets: PHFetchResult<PHAsset>) {
         photos = assets
         DispatchQueue.main.async {
@@ -165,6 +168,6 @@ extension SinglePhotoLibraryView: PhotoLibraryDelegate {
     }
 }
 
-public protocol SinglePhotoLibraryViewDelegate: NSObjectProtocol {
-    func photoSelected(image: UIImage) -> Void
+public protocol PhotoLibraryViewDelegate: NSObjectProtocol {
+    func photosSelected(images: [UIImage], assets: [PHAsset])
 }
